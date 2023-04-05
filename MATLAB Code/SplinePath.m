@@ -8,7 +8,7 @@ wayPoints = [8 -2.5; 8 0;...
 
 
 ts = 1; % time in s between each waypoint
-posDiv = 100; % number of intervals on each segment 
+posDiv = 10; % number of intervals on each segment 
 height = size(wayPoints);
 height = height(1); % number of waypoints 
 timeLength = ts * height; % time from first to last waypoint
@@ -73,7 +73,7 @@ theta2 = [theta2; theta2(1:s-1)];
 theta1 = theta1(s:end);
 theta2 = theta2(s:end);
 
-theta1 = flip(theta1);
+%theta1 = flip(theta1);
 theta2 = flip(theta2);
 
 theta1 = theta1+90;
