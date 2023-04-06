@@ -32,8 +32,5 @@ def step(data,number):
             kit.servo[0].angle = int(float(data[index][0]))+90
             kit.servo[1].angle = int(float(data[index][1]))
             print('('+data[index][0]+','+data[index][1]+')')
-            time.sleep(0.1)
-    
-    
-
+            time.sleep(0.007)
     

@@ -1,14 +1,14 @@
 clear; clc; 
 
-wayPoints = [8 -2.5; 8 0;...
-    8 2.5; 7 2;... 
-    6.5 1; 7 0;...
-    6.5 -1; 7 -2;
-    8 -2.5]; % XY loc of each waypoint
+wayPoints = [7 -3.5; 7 0;...
+    7 3.5; 6 3;... 
+    5.5 2; 6 0;...
+    5.5 -2; 6 -3;
+    7 -3.5]; % XY loc of each waypoint
 
 
 ts = 1; % time in s between each waypoint
-posDiv = 10; % number of intervals on each segment 
+posDiv = 100; % number of intervals on each segment 
 height = size(wayPoints);
 height = height(1); % number of waypoints 
 timeLength = ts * height; % time from first to last waypoint
