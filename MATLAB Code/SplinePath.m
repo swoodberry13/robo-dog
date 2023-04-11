@@ -1,10 +1,10 @@
 clear; clc; 
 
-wayPoints = [7 -3.5; 7 0;...
-    7 3.5; 6 3;... 
-    5.5 2; 6 0;...
-    5.5 -2; 6 -3;
-    7 -3.5]; % XY loc of each waypoint
+wayPoints = [-3.5 7; 0 7;...
+    3.5 7; 1.75 6;... 
+    0 5; -2.7 5.4;...
+    -4 6; -3.8 6.6;
+    -3.5 7]; % XY loc of each waypoint
 
 
 ts = 1; % time in s between each waypoint
@@ -20,28 +20,28 @@ x1 = wayPoints([1:3],1);
 y1 = wayPoints([1:3],2); 
 
 % coordinate vectors for all points in the segment
-yy1 = linspace(y1(1),y1(3),posDiv); 
-xx1 = spline(y1,x1,yy1); 
+xx1 = linspace(x1(1),x1(3),posDiv); 
+yy1 = spline(x1,y1,xx1); 
 
 %Second Segment 
 x2 = wayPoints([3:5],1); 
 y2 = wayPoints([3:5],2); 
 
 xx2 = linspace(x2(1),x2(3),posDiv); 
-yy2 = spline(x2,y2,xx2);
+yy2 = spline(x2',[0 y2' 0],xx2);
 
 % Third Segment 
 x3 = wayPoints([5:7],1); 
 y3 = wayPoints([5:7],2); 
 
-yy3 = linspace(y3(1),y3(3),posDiv); 
-xx3 = spline(y3',[0 x3' 0],yy3); 
+xx3 = linspace(x3(1),x3(3),posDiv); 
+yy3 = spline(x3,y3,xx3); 
 
 % Fourth Segment 
 x4 = wayPoints([7:9],1); 
 y4 = wayPoints([7:9],2); 
 
-xx4 = linspace(x4(1),x4(3),posDiv); 
+xx4 = linspace(x4(1),x4(3),posDiv/2); 
 yy4 = spline(x4,y4,xx4); 
 
 % coordinate column vectors of path of LED (in order)
@@ -64,8 +64,9 @@ hold off
 %plot(x,y,'.')
 
 % changing the initial position of the leg. 
-s = find(floor(y) == 0); %might have to change the coeff of x 
+s = find(floor(x) == 0); %might have to change the coeff of x 
 s = s(1);
+
 
 theta1 = [theta1; theta1(1:s-1)];
 theta2 = [theta2; theta2(1:s-1)];
@@ -73,11 +74,12 @@ theta2 = [theta2; theta2(1:s-1)];
 theta1 = theta1(s:end);
 theta2 = theta2(s:end);
 
-%theta1 = flip(theta1);
-theta2 = flip(theta2);
 
-theta1 = theta1+90;
-%theta2 = theta2+90;
+theta1 = theta1 + 60 ;
+theta2 = theta2 + 60 ;
+
+theta1 = flip(theta1);
+theta2 = flip(theta2);
 
 figure
 legAnimate(theta1,theta2,5,5)
@@ -94,3 +96,5 @@ data = array2table([theta1 theta2]);
 % % save table as CSV file 
 writetable(data,'legData.csv','Delimiter',',','QuoteStrings',true);
 type 'legData.csv';
+
+

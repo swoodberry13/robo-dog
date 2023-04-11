@@ -23,14 +23,18 @@ def importCSV(filename):
 # second input number corresponds to how many steps are wanted
 def step(data,number):
     kit = ServoKit(channels = 16)
-    kit.servo[0].angle = int(float(data[0][0]))+90
+    kit.servo[0].angle = int(float(data[0][0]))
+    kit.servo[4].angle = 180 - int(float(data[0][0]))
     kit.servo[1].angle = int(float(data[0][1]))
+    kit.servo[5].angle = 180 - int(float(data[0][1]))
     time.sleep(2)
     
     for n in range(number):
         for index in range(len(data)-1):
-            kit.servo[0].angle = int(float(data[index][0]))+90
+            kit.servo[0].angle = int(float(data[index][0]))
+            kit.servo[4].angle = 180 - int(float(data[index][0]))
             kit.servo[1].angle = int(float(data[index][1]))
+            kit.servo[5].angle = 180 - int(float(data[index][1]))
             print('('+data[index][0]+','+data[index][1]+')')
-            time.sleep(0.007)
+            time.sleep(0.07)
     
