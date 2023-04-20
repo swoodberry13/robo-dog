@@ -26,8 +26,8 @@ for k = 1:size(theta1)
     plot([0,xcomp1(k)],[0,ycomp1(k)],'-', ... 
         [xcomp1(k) xfoot(k)],[ycomp1(k) yfoot(k)],'-')
     xlim([-5 5])
-    ylim([0 10])
-    pause(0.01)
+    ylim([-10 0])
+    pause(0.001)
 end
 end
 plot(xfoot,yfoot,'o')
