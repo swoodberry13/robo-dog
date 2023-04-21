@@ -1,8 +1,16 @@
 # Untitled - By: emeliadaro - Wed Apr 19 2023
 #adaped from example on digikey.com by ShawnHymel
 from pyb import Pin, Timer
-import sensor, image
+import sensor, image, ustruct
 import time
+from machine import I2C
+from vl53l1x import VL53L1X
+
+#initialize TOF sensor
+tof = VL53L1X(I2C(2))
+
+#initialize USB connection
+usb = USB_VCP()
 
 #create PWM class to control servos from Nicla Board PWM
 class PWM():
@@ -46,6 +54,8 @@ sensor.set_contrast(3)
 sensor.set_gainceiling(16)
 sensor.set_framesize(sensor.QVGA)
 sensor.set_pixformat(sensor.GRAYSCALE)
+sensor.set_framesize(sensor.QVGA)   # Set frame size to QVGA (320x240)
+sensor.skip_frames(time = 2000)     # Wait for settings take effect.
 
 # get center coords of camera image
 WIDTH = sensor.width()
@@ -136,7 +146,16 @@ while(True):
     else:
 
         print("else loop -- no face detected")
-
+        dist=tof.read()
+        cmd = usb.recv(4, timeout=5000)
+        if int(dist)>500:
+           usb.send(1)
+        else:
+            usb.send(0)
+        if (cmd == b'snap'):
+            img = sensor.snapshot().compress()
+            usb.send(ustruct.pack("<L", img.size()))
+            usb.send(img)
 
     # Print FPS
     print("FPS:", clock.fps())
