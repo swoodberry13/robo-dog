@@ -1,5 +1,5 @@
-		import time
-		import machine
+    import time
+    import machine
 
     from secrets import Tufts_Wireless as wifi
     import MQTT_CBR as mqtt_CBR
